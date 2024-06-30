@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  redis:
+    image: redis/redis-stack:latest
+    container_name: redis-stack
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+  postgres:
+    image: postgres:15.1
+    environment:
+      POSTGRES_DB: "e_commerce"
+      POSTGRES_SCHEMA: "e_commerce"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "0000"
+    ports:
+      - "5432:5432"

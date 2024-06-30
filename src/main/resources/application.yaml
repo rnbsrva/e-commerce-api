@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: e-commerce-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/e_commerce?currentSchema=e_commerce
+    username: "postgres"
+    password: "0000"
+  flyway:
+    locations: classpath:db/migration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG
+server:
+  servlet:
+    session:
+      timeout: 20m
