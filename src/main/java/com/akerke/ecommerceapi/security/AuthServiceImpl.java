@@ -1,6 +1,7 @@
 package com.akerke.ecommerceapi.security;
 
 import com.akerke.ecommerceapi.common.enums.RoleType;
+import com.akerke.ecommerceapi.common.exception.AuthException;
 import com.akerke.ecommerceapi.domain.mapper.UserMapper;
 import com.akerke.ecommerceapi.domain.repository.UserRepository;
 import com.akerke.ecommerceapi.domain.service.RoleService;
@@ -34,11 +35,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void register(RegisterRequest registerRequest, HttpServletRequest request, HttpServletResponse response) {
         if (userRepository.existsByEmail(registerRequest.email())) {
-            throw new RuntimeException("Email already exists"); //TODO: create custom exception
+            throw new AuthException("Email already exists");
         }
 
         if (userRepository.existsByPhone(registerRequest.phone())) {
-            throw new RuntimeException("Phone already exists"); //TODO: create custom exception
+            throw new AuthException("Phone already exists");
         }
 
         var user = userMapper.toUser(registerRequest);
