@@ -32,4 +32,12 @@ public class AuthController {
         authService.login(authRequest, request, response);
     }
 
+    @GetMapping("/confirm-email")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    void login(HttpServletRequest request,
+               HttpServletResponse response,
+               @RequestParam String token) {
+        authService.confirmEmail(token, request, response);
+    }
+
 }

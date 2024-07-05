@@ -1,10 +1,19 @@
 package com.akerke.ecommerceapi.security.payload;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public record RegisterRequest(
+        @Email
         String email,
+        @NotBlank
         String phone,
+        @NotBlank
         String password,
-        String firstName,
-        String lastName
+        @NotBlank @NotNull
+        String name,
+        @NotBlank @NotNull
+        String surname
 ){
 }

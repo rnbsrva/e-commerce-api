@@ -9,10 +9,9 @@ public interface AuthService {
 
     void register(RegisterRequest registerRequest,  HttpServletRequest request, HttpServletResponse response);
     void login(AuthRequest authRequest, HttpServletRequest request, HttpServletResponse response);
+    void confirmEmail(String token, HttpServletRequest request, HttpServletResponse response);
 
-
-//    void logout(); TODO: implement logout
-//    void resetPassword(AuthRquest authRquest);
+//    void resetPassword(AuthRquest authRquest); //TODO implement
 //    void forgotPassword(AuthRquest authRquest);
 
 }

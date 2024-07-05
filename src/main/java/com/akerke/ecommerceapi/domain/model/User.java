@@ -31,5 +31,6 @@ public class User extends BaseEntity implements Serializable {
 
     @JsonIgnore
     private String password;
+    private Boolean confirmed;
 
 }
