@@ -1,5 +1,8 @@
 package com.akerke.ecommerceapi.domain.service;
 
+import java.util.Map;
+
 public interface EmailService {
-    void sendConfirmationEmail(String to, String confirmationLink, String name);
+
+    void sendEmail(String to, String subject, String templateName, Map<String, Object> model);
 }

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -26,7 +25,7 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
     private final Configuration freemarkerConfig;
 
-    private void sendEmail(String to, String subject, String body) {
+    private void sendEmailMessage(String to, String subject, String body) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -34,26 +33,26 @@ public class EmailServiceImpl implements EmailService {
             helper.setSubject(subject);
             helper.setText(body, true);
             javaMailSender.send(mimeMessage);
+            log.info("%s email sent to %s".formatted(subject, to));
         } catch (MessagingException e) {
+            log.error("Failed to send email to %s".formatted(to), e);
             throw new MailSendException("Failed to send email", e);
         }
     }
 
-    @Override
-    public void sendConfirmationEmail(String to, String confirmationLink, String name) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("name", name);
-        model.put("confirmationLink", confirmationLink);
-
-        String emailContent;
+    private String processTemplate(String templateName, Map<String, Object> model) {
         try {
-            Template template = freemarkerConfig.getTemplate("confirmation-mail.ftl");
-            emailContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+            Template template = freemarkerConfig.getTemplate(templateName);
+            return FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
         } catch (IOException | TemplateException e) {
+            log.error("Failed to process email template %s".formatted(templateName), e);
             throw new MailSendException("Failed to process email template", e);
         }
+    }
 
-        sendEmail(to, "Email Confirmation", emailContent);
-        log.info("Confirmation email sent.");
+    @Override
+    public void sendEmail(String to, String subject, String templateName, Map<String, Object> model) {
+        String emailContent = processTemplate(templateName, model);
+        sendEmailMessage(to, subject, emailContent);
     }
 }
