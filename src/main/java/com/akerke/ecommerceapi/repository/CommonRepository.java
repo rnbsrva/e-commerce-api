@@ -1,4 +1,4 @@
-package com.akerke.ecommerceapi.domain.repository;
+package com.akerke.ecommerceapi.repository;
 
 import com.akerke.ecommerceapi.common.exception.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;

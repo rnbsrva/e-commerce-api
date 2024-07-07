@@ -1,4 +1,4 @@
-package com.akerke.ecommerceapi.domain.service;
+package com.akerke.ecommerceapi.service;
 
 import java.util.Map;
 

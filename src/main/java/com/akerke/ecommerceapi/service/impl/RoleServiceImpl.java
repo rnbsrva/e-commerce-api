@@ -1,9 +1,9 @@
-package com.akerke.ecommerceapi.domain.service.impl;
+package com.akerke.ecommerceapi.service.impl;
 
 import com.akerke.ecommerceapi.common.enums.RoleType;
-import com.akerke.ecommerceapi.domain.model.Role;
-import com.akerke.ecommerceapi.domain.repository.RoleRepository;
-import com.akerke.ecommerceapi.domain.service.RoleService;
+import com.akerke.ecommerceapi.model.Role;
+import com.akerke.ecommerceapi.repository.RoleRepository;
+import com.akerke.ecommerceapi.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

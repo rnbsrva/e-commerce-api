@@ -1,6 +1,6 @@
-package com.akerke.ecommerceapi.domain.service.impl;
+package com.akerke.ecommerceapi.service.impl;
 
-import com.akerke.ecommerceapi.domain.service.EmailService;
+import com.akerke.ecommerceapi.service.EmailService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

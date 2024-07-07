@@ -1,6 +1,6 @@
-package com.akerke.ecommerceapi.domain.service;
+package com.akerke.ecommerceapi.service;
 
-import com.akerke.ecommerceapi.domain.model.User;
+import com.akerke.ecommerceapi.model.User;
 
 public interface UserService {
 

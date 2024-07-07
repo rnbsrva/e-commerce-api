@@ -1,9 +1,9 @@
-package com.akerke.ecommerceapi.domain.service.impl;
+package com.akerke.ecommerceapi.service.impl;
 
 import com.akerke.ecommerceapi.common.exception.EntityNotFoundException;
-import com.akerke.ecommerceapi.domain.model.User;
-import com.akerke.ecommerceapi.domain.repository.UserRepository;
-import com.akerke.ecommerceapi.domain.service.UserService;
+import com.akerke.ecommerceapi.model.User;
+import com.akerke.ecommerceapi.repository.UserRepository;
+import com.akerke.ecommerceapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

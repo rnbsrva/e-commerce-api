@@ -11,9 +11,9 @@ public record RegisterRequest(
         String phone,
         @NotBlank
         String password,
-        @NotBlank @NotNull
+        @NotBlank
         String name,
-        @NotBlank @NotNull
+        @NotBlank
         String surname
 ){
 }

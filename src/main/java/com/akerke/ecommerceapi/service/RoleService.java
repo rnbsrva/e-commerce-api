@@ -1,7 +1,7 @@
-package com.akerke.ecommerceapi.domain.service;
+package com.akerke.ecommerceapi.service;
 
 import com.akerke.ecommerceapi.common.enums.RoleType;
-import com.akerke.ecommerceapi.domain.model.Role;
+import com.akerke.ecommerceapi.model.Role;
 
 public interface RoleService {
 

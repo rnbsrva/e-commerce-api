@@ -1,8 +1,6 @@
-package com.akerke.ecommerceapi.domain.repository;
+package com.akerke.ecommerceapi.repository;
 
-import com.akerke.ecommerceapi.common.enums.ConfirmationTokenType;
-import com.akerke.ecommerceapi.domain.model.ConfirmationToken;
-import org.springframework.boot.autoconfigure.security.saml2.Saml2RelyingPartyProperties;
+import com.akerke.ecommerceapi.model.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

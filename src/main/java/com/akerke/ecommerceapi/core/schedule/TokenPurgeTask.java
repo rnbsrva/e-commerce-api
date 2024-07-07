@@ -1,6 +1,6 @@
-package com.akerke.ecommerceapi.common.schedule;
+package com.akerke.ecommerceapi.core.schedule;
 
-import com.akerke.ecommerceapi.domain.repository.ConfirmationTokenRepository;
+import com.akerke.ecommerceapi.repository.ConfirmationTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

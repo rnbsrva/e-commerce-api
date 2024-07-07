@@ -1,7 +1,7 @@
-package com.akerke.ecommerceapi.domain.repository;
+package com.akerke.ecommerceapi.repository;
 
 import com.akerke.ecommerceapi.common.enums.RoleType;
-import com.akerke.ecommerceapi.domain.model.Role;
+import com.akerke.ecommerceapi.model.Role;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

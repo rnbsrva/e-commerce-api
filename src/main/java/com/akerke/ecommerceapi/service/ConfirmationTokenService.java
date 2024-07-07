@@ -1,8 +1,8 @@
-package com.akerke.ecommerceapi.domain.service;
+package com.akerke.ecommerceapi.service;
 
 import com.akerke.ecommerceapi.common.enums.ConfirmationTokenType;
-import com.akerke.ecommerceapi.domain.model.ConfirmationToken;
-import com.akerke.ecommerceapi.domain.model.User;
+import com.akerke.ecommerceapi.model.ConfirmationToken;
+import com.akerke.ecommerceapi.model.User;
 
 public interface ConfirmationTokenService {
 

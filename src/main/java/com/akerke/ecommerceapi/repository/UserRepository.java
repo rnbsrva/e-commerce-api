@@ -1,6 +1,6 @@
-package com.akerke.ecommerceapi.domain.repository;
+package com.akerke.ecommerceapi.repository;
 
-import com.akerke.ecommerceapi.domain.model.User;
+import com.akerke.ecommerceapi.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

@@ -1,6 +1,6 @@
-package com.akerke.ecommerceapi.domain.mapper;
+package com.akerke.ecommerceapi.core.mapper;
 
-import com.akerke.ecommerceapi.domain.model.User;
+import com.akerke.ecommerceapi.model.User;
 import com.akerke.ecommerceapi.security.payload.RegisterRequest;
 import org.mapstruct.*;
 

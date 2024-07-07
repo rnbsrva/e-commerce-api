@@ -1,6 +1,6 @@
 package com.akerke.ecommerceapi.security;
 
-import com.akerke.ecommerceapi.domain.model.User;
+import com.akerke.ecommerceapi.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

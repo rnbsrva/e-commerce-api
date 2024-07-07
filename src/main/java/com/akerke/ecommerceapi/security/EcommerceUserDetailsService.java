@@ -1,6 +1,6 @@
 package com.akerke.ecommerceapi.security;
 
-import com.akerke.ecommerceapi.domain.repository.UserRepository;
+import com.akerke.ecommerceapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

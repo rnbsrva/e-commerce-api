@@ -3,21 +3,19 @@ package com.akerke.ecommerceapi.security;
 import com.akerke.ecommerceapi.common.enums.ConfirmationTokenType;
 import com.akerke.ecommerceapi.common.enums.RoleType;
 import com.akerke.ecommerceapi.common.exception.AuthException;
-import com.akerke.ecommerceapi.domain.mapper.UserMapper;
-import com.akerke.ecommerceapi.domain.model.ConfirmationToken;
-import com.akerke.ecommerceapi.domain.model.User;
-import com.akerke.ecommerceapi.domain.repository.UserRepository;
-import com.akerke.ecommerceapi.domain.service.ConfirmationTokenService;
-import com.akerke.ecommerceapi.domain.service.EmailService;
-import com.akerke.ecommerceapi.domain.service.RoleService;
-import com.akerke.ecommerceapi.domain.service.UserService;
+import com.akerke.ecommerceapi.core.mapper.UserMapper;
+import com.akerke.ecommerceapi.model.ConfirmationToken;
+import com.akerke.ecommerceapi.model.User;
+import com.akerke.ecommerceapi.service.ConfirmationTokenService;
+import com.akerke.ecommerceapi.service.EmailService;
+import com.akerke.ecommerceapi.service.RoleService;
+import com.akerke.ecommerceapi.service.UserService;
 import com.akerke.ecommerceapi.security.payload.AuthRequest;
 import com.akerke.ecommerceapi.security.payload.RegisterRequest;
 import com.akerke.ecommerceapi.security.payload.ResetPasswordRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

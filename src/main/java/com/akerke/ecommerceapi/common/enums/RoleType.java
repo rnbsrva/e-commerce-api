@@ -2,6 +2,6 @@ package com.akerke.ecommerceapi.common.enums;
 
 public enum RoleType {
 
-    USER, ADMIN, MODERATOR, GUEST, SELLER
+    USER, APPLICATION_ADMIN, MODERATOR, GUEST, SELLER, MANAGER
 
 }

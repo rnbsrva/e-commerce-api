@@ -1,4 +1,4 @@
-package com.akerke.ecommerceapi.domain.model;
+package com.akerke.ecommerceapi.model;
 
 import com.akerke.ecommerceapi.common.enums.ConfirmationTokenType;
 import jakarta.persistence.*;
