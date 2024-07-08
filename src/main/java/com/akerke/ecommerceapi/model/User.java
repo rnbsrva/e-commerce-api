@@ -1,5 +1,6 @@
 package com.akerke.ecommerceapi.model;
 
+import com.akerke.ecommerceapi.model.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -32,5 +33,16 @@ public class User extends BaseEntity implements Serializable {
     @JsonIgnore
     private String password;
     private Boolean confirmed;
+
+// user request to create shop
+    // ShopStuff
+    // {
+    // private RoleType role;
+    // private User user;
+    // private Shop shop;
+
+    
+    // }
+    // can add managers to shop
 
 }

@@ -16,6 +16,7 @@ import com.akerke.ecommerceapi.security.payload.ResetPasswordRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +33,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
@@ -63,8 +65,9 @@ public class AuthServiceImpl implements AuthService {
         userService.save(user);
 
         sendVerificationToken(user);
-
+        log.info("User {} registered", registerRequest.email());
     }
+
 
     private void sendVerificationToken(User user) {
         var token = confirmationTokenService.generateAndSaveToken(user, ConfirmationTokenType.EMAIL_CONFIRMATION);
@@ -77,11 +80,13 @@ public class AuthServiceImpl implements AuthService {
                 Map.of("name", user.getName(), "confirmationLink", confirmationLink));
     }
 
+
     @Override
     public void login(AuthRequest authRequest, HttpServletRequest request, HttpServletResponse response) {
         var token = UsernamePasswordAuthenticationToken.unauthenticated(
                 authRequest.email(), authRequest.password());
         authenticate(token, request, response);
+        log.info("User {} logged in", authRequest.email());
     }
 
     @Override
@@ -112,7 +117,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void resetPassword(String token, ResetPasswordRequest resetPasswordDto) {
-        if  (!resetPasswordDto.confirmPassword().equals(resetPasswordDto.password())) {
+        if (!resetPasswordDto.confirmPassword().equals(resetPasswordDto.password())) {
             throw new AuthException("Passwords do not match");
         }
 
@@ -123,6 +128,30 @@ public class AuthServiceImpl implements AuthService {
         userService.save(user);
 
         confirmationTokenService.deleteByToken(confirmationToken);
+    }
+
+    @Override
+    public void assignRole(Long userId, RoleType roleType) {
+        var user = userService.findById(userId);
+        if (!user.getConfirmed()) {
+            throw new AuthException("User is not confirmed");
+        }
+        var role = roleService.findByType(roleType);
+        user.getRoles().add(role);
+        userService.save(user);
+        log.info("Role {} assigned to user {}", roleType, user.getEmail());
+    }
+
+    @Override
+    public void removeRole(Long userId, RoleType roleType) {
+        var user = userService.findById(userId);
+        if (!user.getConfirmed()) {
+            throw new AuthException("User is not confirmed");
+        }
+        var role = roleService.findByType(roleType);
+        user.getRoles().remove(role);
+        userService.save(user);
+        log.info("Role {} removed from user {}", roleType, user.getEmail());
     }
 
     private void authenticate(UsernamePasswordAuthenticationToken token, HttpServletRequest request, HttpServletResponse response) {

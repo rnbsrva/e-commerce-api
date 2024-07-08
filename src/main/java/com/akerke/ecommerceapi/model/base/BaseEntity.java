@@ -1,4 +1,4 @@
-package com.akerke.ecommerceapi.model;
+package com.akerke.ecommerceapi.model.base;
 
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;

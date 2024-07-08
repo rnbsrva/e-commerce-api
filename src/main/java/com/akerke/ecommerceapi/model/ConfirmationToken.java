@@ -1,6 +1,7 @@
 package com.akerke.ecommerceapi.model;
 
 import com.akerke.ecommerceapi.common.enums.ConfirmationTokenType;
+import com.akerke.ecommerceapi.model.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
