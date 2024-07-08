@@ -1,5 +1,7 @@
 package com.akerke.ecommerceapi.security.payload;
 
+import com.akerke.ecommerceapi.core.annotation.Password;
+import com.akerke.ecommerceapi.core.annotation.PhoneNumber;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,9 +9,9 @@ import jakarta.validation.constraints.NotNull;
 public record RegisterRequest(
         @Email
         String email,
-        @NotBlank
+        @PhoneNumber
         String phone,
-        @NotBlank
+        @Password
         String password,
         @NotBlank
         String name,
