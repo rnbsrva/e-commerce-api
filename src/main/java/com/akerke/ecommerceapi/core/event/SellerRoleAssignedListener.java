@@ -19,7 +19,7 @@ public class SellerRoleAssignedListener {
     @EventListener
     public void onSellerRoleAssigned(SellerRoleAssignedEvent event) {
         User user = userService.findById(event.getUserId());
-                                                                                                                                Map<String, Object> model = Map.of("name", user.getName());
+        Map<String, Object> model = Map.of("name", user.getName());
         emailService.sendEmail(user.getEmail(), "Seller role assigned", "seller-role-assigned.ftl", model);
     }
 }

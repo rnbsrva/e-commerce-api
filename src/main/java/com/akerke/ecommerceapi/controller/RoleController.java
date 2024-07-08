@@ -9,7 +9,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,7 +23,10 @@ public class RoleController {
     private final ApplicationEventPublisher eventPublisher;
 
     @PreAuthorize("@roleController.hasRequiredRole(#roleType)")
-    void assignRole(Long userId, RoleType roleType) {
+    @PostMapping("/assign")
+    void assignRole(
+            @RequestParam Long userId,
+            @RequestParam RoleType roleType) {
         authService.assignRole(userId, roleType);
         if (roleType == RoleType.SELLER) {
             eventPublisher.publishEvent(new SellerRoleAssignedEvent(this, userId));
@@ -29,7 +34,11 @@ public class RoleController {
     }
 
     @PreAuthorize("@roleController.hasRequiredRole(#roleType)")
-    void removeRole(Long userId, RoleType roleType) {
+    @PostMapping("/remove")
+    void removeRole(
+            @RequestParam Long userId,
+            @RequestParam RoleType roleType
+    ) {
         authService.removeRole(userId, roleType);
     }
 
