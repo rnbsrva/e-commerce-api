@@ -2,7 +2,7 @@ package com.akerke.ecommerceapi.controller;
 
 import com.akerke.ecommerceapi.common.enums.RoleType;
 import com.akerke.ecommerceapi.core.event.SellerRoleAssignedEvent;
-import com.akerke.ecommerceapi.security.AuthService;
+import com.akerke.ecommerceapi.service.AuthService;
 import com.akerke.ecommerceapi.security.EcommerceUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

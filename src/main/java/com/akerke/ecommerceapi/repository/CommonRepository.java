@@ -12,8 +12,7 @@ public interface  CommonRepository<E, PK extends Serializable> extends JpaReposi
     default E findByID(
             PK id
     ) {
-        return findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException(entityClass(), id));
+        return findById(id).orElseThrow(() -> new EntityNotFoundException(entityClass(), id));
     }
 
     Class<?> entityClass();

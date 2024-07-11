@@ -1,6 +1,6 @@
 package com.akerke.ecommerceapi.controller;
 
-import com.akerke.ecommerceapi.security.AuthService;
+import com.akerke.ecommerceapi.service.AuthService;
 import com.akerke.ecommerceapi.security.payload.AuthRequest;
 import com.akerke.ecommerceapi.security.payload.RegisterRequest;
 import com.akerke.ecommerceapi.security.payload.ResetPasswordRequest;
@@ -10,7 +10,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

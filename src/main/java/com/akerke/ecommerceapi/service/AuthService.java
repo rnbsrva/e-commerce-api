@@ -1,4 +1,4 @@
-package com.akerke.ecommerceapi.security;
+package com.akerke.ecommerceapi.service;
 
 import com.akerke.ecommerceapi.common.enums.RoleType;
 import com.akerke.ecommerceapi.security.payload.AuthRequest;

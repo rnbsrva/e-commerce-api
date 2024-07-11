@@ -1,5 +1,6 @@
 package com.akerke.ecommerceapi.core.annotation;
 
+import com.akerke.ecommerceapi.core.validator.PasswordValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
