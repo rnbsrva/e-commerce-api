@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,19 +31,15 @@ public class User extends BaseEntity implements Serializable {
     )
     private Set<Role> roles;
 
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    private List<Order> orders;
+
     @JsonIgnore
     private String password;
     private Boolean confirmed;
-
-// user request to create shop
-    // ShopStuff
-    // {
-    // private RoleType role;
-    // private User user;
-    // private Shop shop;
-
-    
-    // }
-    // can add managers to shop
 
 }
