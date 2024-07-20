@@ -1,7 +1,7 @@
 package com.akerke.ecommerceapi.service.impl;
 
 import com.akerke.ecommerceapi.common.enums.ConfirmationTokenType;
-import com.akerke.ecommerceapi.common.enums.RoleType;
+import com.akerke.ecommerceapi.common.enums.SafetyRole;
 import com.akerke.ecommerceapi.common.exception.AuthException;
 import com.akerke.ecommerceapi.core.mapper.UserMapper;
 import com.akerke.ecommerceapi.model.ConfirmationToken;
@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
 
         var user = userMapper.toUser(registerRequest);
         user.setPassword(passwordEncoder.encode(registerRequest.password()));
-        user.setRoles(Collections.singleton(roleService.findByType(RoleType.USER)));
+        user.setRoles(Collections.singleton(roleService.findByType(SafetyRole.USER)));
         userService.save(user);
 
         sendVerificationToken(user);
@@ -128,27 +128,27 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void assignRole(Long userId, RoleType roleType) {
+    public void assignRole(Long userId, SafetyRole safetyRole) {
         var user = userService.findById(userId);
         if (!user.getConfirmed()) {
             throw new AuthException("User is not confirmed");
         }
-        var role = roleService.findByType(roleType);
+        var role = roleService.findByType(safetyRole);
         user.getRoles().add(role);
         userService.save(user);
-        log.info("Role {} assigned to user {}", roleType, user.getEmail());
+        log.info("Role {} assigned to user {}", safetyRole, user.getEmail());
     }
 
     @Override
-    public void removeRole(Long userId, RoleType roleType) {
+    public void removeRole(Long userId, SafetyRole safetyRole) {
         var user = userService.findById(userId);
         if (!user.getConfirmed()) {
             throw new AuthException("User is not confirmed");
         }
-        var role = roleService.findByType(roleType);
+        var role = roleService.findByType(safetyRole);
         user.getRoles().remove(role);
         userService.save(user);
-        log.info("Role {} removed from user {}", roleType, user.getEmail());
+        log.info("Role {} removed from user {}", safetyRole, user.getEmail());
     }
 
     private void authenticate(UsernamePasswordAuthenticationToken token, HttpServletRequest request, HttpServletResponse response) {

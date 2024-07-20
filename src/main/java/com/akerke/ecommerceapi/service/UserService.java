@@ -4,7 +4,7 @@ import com.akerke.ecommerceapi.model.User;
 
 public interface UserService {
 
-    User save (User user);
+    void save (User user);
 
     User findById(Long id);
 

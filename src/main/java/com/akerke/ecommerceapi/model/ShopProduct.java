@@ -33,12 +33,4 @@ public class ShopProduct extends BaseEntity {
             cascade = CascadeType.ALL
     )
     private List<Order> orders;
-
-    @OneToMany(
-            mappedBy = "shopProduct",
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL
-    )
-    private List<Review> reviews;
-
 }

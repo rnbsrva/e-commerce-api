@@ -1,6 +1,6 @@
 package com.akerke.ecommerceapi.service;
 
-import com.akerke.ecommerceapi.common.enums.RoleType;
+import com.akerke.ecommerceapi.common.enums.SafetyRole;
 import com.akerke.ecommerceapi.security.payload.AuthRequest;
 import com.akerke.ecommerceapi.security.payload.RegisterRequest;
 import com.akerke.ecommerceapi.security.payload.ResetPasswordRequest;
@@ -14,7 +14,7 @@ public interface AuthService {
     void confirmEmail(String token, HttpServletRequest request, HttpServletResponse response);
     void forgotPassword(String email);
     void resetPassword(String token, ResetPasswordRequest resetPasswordDto);
-    void assignRole(Long userId, RoleType roleType);
-    void removeRole(Long userId, RoleType roleType);
+    void assignRole(Long userId, SafetyRole safetyRole);
+    void removeRole(Long userId, SafetyRole safetyRole);
 
 }

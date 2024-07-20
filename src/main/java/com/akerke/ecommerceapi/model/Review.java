@@ -18,9 +18,6 @@ public class Review extends BaseEntity {
     private Integer rating;
 
     @ManyToOne
-    private ShopProduct shopProduct;
-
-    @ManyToOne
-    private User user;
+    private Order order;
 
 }

@@ -5,13 +5,11 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum RoleType {
+public enum SafetyRole {
 
     APPLICATION_ADMIN,
     MODERATOR,
-    SELLER,
-    MANAGER,
     USER,
-    GUEST;
+    GUEST
 
 }

@@ -5,13 +5,15 @@ CREATE TABLE review
     last_modified_date TIMESTAMP WITHOUT TIME ZONE,
     text               VARCHAR(255),
     rating             INTEGER,
-    shop_product_id    BIGINT,
-    user_id            BIGINT,
+    order_id           BIGINT,
     CONSTRAINT pk_review PRIMARY KEY (id)
 );
 
 ALTER TABLE review
-    ADD CONSTRAINT FK_REVIEW_ON_SHOP_PRODUCT FOREIGN KEY (shop_product_id) REFERENCES shop_product (id);
+    ADD CONSTRAINT FK_REVIEW_ON_ORDER FOREIGN KEY (order_id) REFERENCES orders (id);
 
-ALTER TABLE review
-    ADD CONSTRAINT FK_REVIEW_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
+ALTER TABLE orders
+    ADD COLUMN review_id BIGINT;
+
+ALTER TABLE orders
+    ADD CONSTRAINT FK_ORDERS_ON_REVIEW FOREIGN KEY (review_id) REFERENCES review (id);

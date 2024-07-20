@@ -1,6 +1,6 @@
 package com.akerke.ecommerceapi.model;
 
-import com.akerke.ecommerceapi.common.enums.RoleType;
+import com.akerke.ecommerceapi.common.enums.SafetyRole;
 import com.akerke.ecommerceapi.model.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,10 +17,10 @@ public class Role extends BaseEntity implements GrantedAuthority {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private RoleType roleType;
+    private SafetyRole safetyRole;
 
     @Override
     public String getAuthority() {
-        return this.roleType.name();
+        return this.safetyRole.name();
     }
 }

@@ -1,13 +1,12 @@
 package com.akerke.ecommerceapi.security;
 
-import com.akerke.ecommerceapi.common.enums.RoleType;
+import com.akerke.ecommerceapi.common.enums.SafetyRole;
 import com.akerke.ecommerceapi.model.Role;
 import com.akerke.ecommerceapi.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,8 +17,8 @@ public record EcommerceUserDetails(User user) implements UserDetails {
         return user.getRoles();
     }
 
-    public Set<RoleType> getRoleTypes() {
-        return user.getRoles().stream().map(Role::getRoleType).collect(Collectors.toSet());
+    public Set<SafetyRole> getRoleTypes() {
+        return user.getRoles().stream().map(Role::getSafetyRole).collect(Collectors.toSet());
     }
 
     @Override

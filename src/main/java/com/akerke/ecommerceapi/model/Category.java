@@ -22,6 +22,10 @@ public class Category extends BaseEntity {
 
     private String image;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "category"
+    )
     private List<Product> products;
 }

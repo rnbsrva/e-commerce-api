@@ -18,21 +18,9 @@ CREATE TABLE product
     description        VARCHAR(255),
     price              DOUBLE PRECISION,
     image              VARCHAR(255),
-    category_id        BIGINT,
+    category_id        BIGINT NOT NULL references category(id),
     CONSTRAINT pk_product PRIMARY KEY (id)
 );
-
-ALTER TABLE product
-    ADD CONSTRAINT FK_PRODUCT_ON_CATEGORY FOREIGN KEY (category_id) REFERENCES category (id);
-
-CREATE TABLE category_products
-(
-    category_id BIGINT NOT NULL references category(id),
-    products_id BIGINT NOT NULL references product(id)
-);
-
-ALTER TABLE category_products
-    ADD CONSTRAINT uc_category_products_products UNIQUE (products_id);
 
 CREATE TABLE shop_product
 (

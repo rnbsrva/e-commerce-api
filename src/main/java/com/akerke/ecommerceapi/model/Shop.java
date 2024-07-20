@@ -25,16 +25,12 @@ public class Shop extends BaseEntity {
 
     private String mainImage;
 
-    @ManyToOne
-    private User owner;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "shop_manager",
-            joinColumns = @JoinColumn(name = "shop_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "manager_id", referencedColumnName = "id")
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "shop"
     )
-    private List<User> managers;
+    private List<ShopStaff> shopStaffs;
 
     @OneToMany(
             fetch = FetchType.LAZY,
