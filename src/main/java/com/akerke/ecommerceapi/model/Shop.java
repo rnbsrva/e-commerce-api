@@ -39,4 +39,7 @@ public class Shop extends BaseEntity {
     )
     private List<ShopProduct> shopProducts;
 
+    @OneToOne
+    private ShopRequest shopRequest;
+
 }

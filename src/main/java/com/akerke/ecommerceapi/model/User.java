@@ -45,6 +45,13 @@ public class User extends BaseEntity implements Serializable {
     )
     private List<ShopStaff> shopStaffs;
 
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "user"
+    )
+    private List<ShopRequest> shopRequests;
+
     @JsonIgnore
     private String password;
     private Boolean confirmed;
