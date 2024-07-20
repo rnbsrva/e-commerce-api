@@ -7,6 +7,7 @@ import com.akerke.ecommerceapi.repository.ShopRequestRepository;
 import com.akerke.ecommerceapi.security.EcommerceUserDetails;
 import com.akerke.ecommerceapi.service.EmailService;
 import com.akerke.ecommerceapi.service.ShopRequestService;
+import com.akerke.ecommerceapi.service.ShopService;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,6 +26,7 @@ public class ShopRequestServiceImpl implements ShopRequestService {
 
     private final ShopRequestRepository shopRequestRepository;
     private final ShopMapper shopMapper;
+    private final ShopService shopService;
     private final EmailService emailService;
 
     @Override
@@ -61,7 +62,7 @@ public class ShopRequestServiceImpl implements ShopRequestService {
         shopRequestRepository.save(shopRequest);
 
         if (isApproved) {
-//            shopService.saveShop(shopRequest); TODO
+            shopService.save(shopRequest);
             emailService.sendEmail(shopRequest.getUser().getEmail(),
                     "Shop request approved",
                     "shop-request-approved.ftl",
