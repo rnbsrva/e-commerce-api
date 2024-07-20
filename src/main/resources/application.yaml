@@ -41,3 +41,9 @@ server:
   servlet:
     session:
       timeout: 20m
+
+app:
+  domain: http://localhost:8080
+  mail-properties:
+    email-confirmation-link-pattern: http://localhost:8080/api/v1/auth/confirm-email?token=%s
+    reset-password-link-pattern: http://localhost:8080/api/v1/auth/reset-password/%s

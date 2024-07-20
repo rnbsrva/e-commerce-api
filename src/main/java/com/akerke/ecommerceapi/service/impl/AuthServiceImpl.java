@@ -3,6 +3,7 @@ package com.akerke.ecommerceapi.service.impl;
 import com.akerke.ecommerceapi.common.enums.ConfirmationTokenType;
 import com.akerke.ecommerceapi.common.enums.SafetyRole;
 import com.akerke.ecommerceapi.common.exception.AuthException;
+import com.akerke.ecommerceapi.config.AppProperties;
 import com.akerke.ecommerceapi.core.mapper.UserMapper;
 import com.akerke.ecommerceapi.model.ConfirmationToken;
 import com.akerke.ecommerceapi.model.User;
@@ -42,9 +43,8 @@ public class AuthServiceImpl implements AuthService {
     private final EmailService emailService;
     private final UserMapper userMapper;
     private final RoleService roleService;
+    private final AppProperties appProperties;
 
-    private final static String EMAIL_CONFIRMATION_LINK_PATTERN = "http://localhost:8080/api/v1/auth/confirm-email?token=%s";
-    private final static String RESET_PASSWORD_LINK_PATTERN = "http://localhost:8080/api/v1/auth/reset-password/%s";
 
     @Override
     public void register(RegisterRequest registerRequest) {
@@ -68,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
 
     private void sendVerificationToken(User user) {
         var token = confirmationTokenService.generateAndSaveToken(user, ConfirmationTokenType.EMAIL_CONFIRMATION);
-        String confirmationLink = EMAIL_CONFIRMATION_LINK_PATTERN.formatted(token);
+        String confirmationLink = appProperties.getMailProperties().getEmailConfirmationLinkPattern().formatted(token);
 
         emailService.sendEmail(
                 user.getEmail(),
@@ -103,7 +103,7 @@ public class AuthServiceImpl implements AuthService {
 
         var token = confirmationTokenService.generateAndSaveToken(user, ConfirmationTokenType.PASSWORD_RESET);
 
-        String resetPasswordLink = RESET_PASSWORD_LINK_PATTERN.formatted(token);
+        String resetPasswordLink = appProperties.getMailProperties().getResetPasswordLinkPattern().formatted(token);
 
         emailService.sendEmail(
                 user.getEmail(),
