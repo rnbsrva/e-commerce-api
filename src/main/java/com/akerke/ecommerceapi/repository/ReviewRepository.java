@@ -1,13 +1,13 @@
 package com.akerke.ecommerceapi.repository;
 
-import com.akerke.ecommerceapi.model.Shop;
+import com.akerke.ecommerceapi.model.Review;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ShopRepository extends CommonRepository<Shop, Long> {
+public interface ReviewRepository extends CommonRepository<Review, Long> {
 
     default Class<?> entityClass() {
-        return Shop.class;
+        return Review.class;
     }
 
 }

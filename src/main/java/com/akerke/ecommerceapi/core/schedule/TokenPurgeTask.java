@@ -19,8 +19,7 @@ public class TokenPurgeTask {
     @Scheduled(cron = "${spring.scheduler.token-purge.cron}")
     public void purgeExpired() {
         log.info("TokenPurgeTask scheduled.");
-        LocalDateTime now = LocalDateTime.from(Instant.now());
-        confirmationTokenRepository.deleteAllByExpirationDateSince(now);
+        confirmationTokenRepository.deleteAllByExpirationDateSince(LocalDateTime.now());
     }
 
 }

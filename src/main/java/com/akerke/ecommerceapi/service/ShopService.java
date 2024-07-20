@@ -7,4 +7,6 @@ public interface ShopService {
 
     Shop save(ShopRequest shopRequest);
 
+    Shop findById(Long id);
+
 }

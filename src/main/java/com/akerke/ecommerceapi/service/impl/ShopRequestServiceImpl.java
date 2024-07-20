@@ -2,6 +2,7 @@ package com.akerke.ecommerceapi.service.impl;
 
 import com.akerke.ecommerceapi.common.dto.CreateShopRequest;
 import com.akerke.ecommerceapi.common.dto.ShopRequestDto;
+import com.akerke.ecommerceapi.common.enums.RequestStatus;
 import com.akerke.ecommerceapi.core.mapper.ShopMapper;
 import com.akerke.ecommerceapi.repository.ShopRequestRepository;
 import com.akerke.ecommerceapi.security.EcommerceUserDetails;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,34 +51,40 @@ public class ShopRequestServiceImpl implements ShopRequestService {
 
     @Override
     public void handlePendingShopRequest(Long id,
-                                         Boolean isApproved,
+                                         RequestStatus status,
                                          @Nullable String reason,
                                          Authentication authentication) {
         var shopRequest = shopRequestRepository.findByID(id);
 
         var reviewer = (EcommerceUserDetails) authentication.getPrincipal();
         shopRequest.setReviewedBy(reviewer.user());
-        shopRequest.setIsApproved(isApproved);
+        shopRequest.setReviewedAt(LocalDateTime.now());
+        shopRequest.setRequestStatus(status);
         shopRequest.setRejectedReason(reason);
 
         shopRequestRepository.save(shopRequest);
 
-        if (isApproved) {
-            shopService.save(shopRequest);
-            emailService.sendEmail(shopRequest.getUser().getEmail(),
-                    "Shop request approved",
-                    "shop-request-approved.ftl",
-                    Map.of("shopRequest", shopRequest));
-            log.info("Shop request approved: {}", shopRequest);
-        } else {
-            assert reason != null;
-            emailService.sendEmail(shopRequest.getUser().getEmail(),
-                    "Shop request rejected",
-                    "shop-request-rejected.ftl",
-                    Map.of("shopRequest", shopRequest));
-            log.info("Shop request rejected: {}", shopRequest);
+        switch (status) {
+            case APPROVED -> {
+                shopService.save(shopRequest);
+                emailService.sendEmail(shopRequest.getUser().getEmail(),
+                        "Shop request approved",
+                        "shop-request-approved.ftl",
+                        Map.of("shopRequest", shopRequest));
+                log.info("Shop request approved: {}", shopRequest);
+            }
+            case DENIED -> {
+                if (reason == null || reason.isBlank()) {
+                    throw new IllegalArgumentException("Reason is required for denied shop request");
+                }
+                emailService.sendEmail(shopRequest.getUser().getEmail(),
+                        "Shop request rejected",
+                        "shop-request-rejected.ftl",
+                        Map.of("shopRequest", shopRequest));
+                log.info("Shop request rejected: {}", shopRequest);
+            }
+            default -> throw new IllegalArgumentException("Unknown request status: " + status);
         }
-
     }
 
 }

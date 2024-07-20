@@ -10,7 +10,7 @@ CREATE TABLE shop_request
     phone              VARCHAR(255),
     website            VARCHAR(255),
     user_id            BIGINT,
-    is_approved        BOOLEAN,
+    request_status     VARCHAR(255),
     rejected_reason    VARCHAR(255),
     reviewed_by_id     BIGINT,
     reviewed_at        TIMESTAMP WITHOUT TIME ZONE,

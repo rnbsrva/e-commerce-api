@@ -37,7 +37,7 @@
         <p><strong>Shop Name:</strong> ${shopRequest.name}</p>
         <p><strong>Submission Date:</strong> ${shopRequest.createdDate}</p>
         <p><strong>Rejected Date:</strong> ${shopRequest.reviewedAt}</p>
-        <p><strong>Rejection Reason:</strong> ${shopRequest.rejectionReason}</p>
+        <p><strong>Rejection Reason:</strong> ${shopRequest.rejectedReason}</p>
     </div>
     <p>If you have any questions or need further clarification, please contact us.</p>
     <p>We apologize for any inconvenience this may cause.</p>

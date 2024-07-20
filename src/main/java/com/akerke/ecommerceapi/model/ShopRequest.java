@@ -1,5 +1,6 @@
 package com.akerke.ecommerceapi.model;
 
+import com.akerke.ecommerceapi.common.enums.RequestStatus;
 import com.akerke.ecommerceapi.common.enums.ShopType;
 import com.akerke.ecommerceapi.model.base.BaseEntity;
 import jakarta.persistence.*;
@@ -24,8 +25,8 @@ public class ShopRequest extends BaseEntity {
     private String website;
     @ManyToOne
     private User user;
-
-    private Boolean isApproved;
+    @Enumerated(EnumType.STRING)
+    private RequestStatus requestStatus;
     private String rejectedReason;
     @ManyToOne
     private User reviewedBy;

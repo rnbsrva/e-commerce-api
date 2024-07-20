@@ -8,14 +8,14 @@ import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 public record ShopRequestDto(
+        Long id,
         String name,
         String description,
         ShopType shopType,
         String address,
         String phone,
-        RequestStatus status,
+        RequestStatus requestStatus,
         String website,
-        Boolean isApproved,
         String rejectedReason,
         LocalDateTime reviewedAt
         ) {

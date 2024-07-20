@@ -16,14 +16,14 @@ public class RoleController {
 
     private final AuthService authService;
 
-    @PreAuthorize("hasRole('APPLICATION_ADMIN')")
+    @PreAuthorize("hasAuthority('APPLICATION_ADMIN')")
     @PostMapping("/assign")
     void assignModeratorRole(
             @RequestParam Long userId) {
         authService.assignRole(userId, SafetyRole.MODERATOR);
     }
 
-    @PreAuthorize("hasRole('APPLICATION_ADMIN')")
+    @PreAuthorize("hasAuthority('APPLICATION_ADMIN')")
     @PostMapping("/remove")
     void removeModeratorRole(
             @RequestParam Long userId
