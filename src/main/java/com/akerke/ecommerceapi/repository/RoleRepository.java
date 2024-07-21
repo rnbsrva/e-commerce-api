@@ -2,6 +2,7 @@ package com.akerke.ecommerceapi.repository;
 
 import com.akerke.ecommerceapi.common.enums.SafetyRole;
 import com.akerke.ecommerceapi.model.Role;
+import com.akerke.ecommerceapi.repository.common.CommonRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

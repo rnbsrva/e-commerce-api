@@ -1,6 +1,7 @@
 package com.akerke.ecommerceapi.service.impl;
 
 import com.akerke.ecommerceapi.common.enums.ShopRole;
+import com.akerke.ecommerceapi.core.annotation.CheckStaff;
 import com.akerke.ecommerceapi.core.event.ManagerRoleAssignedEvent;
 import com.akerke.ecommerceapi.model.Shop;
 import com.akerke.ecommerceapi.model.ShopStaff;
@@ -32,47 +33,37 @@ public class ShopStaffServiceImpl implements ShopStaffService {
 
     @Override
     public ShopStaff saveSeller(Long shopId, Long userId) {
-        var shopStaff = new ShopStaff();
+        var shop = shopService.findById(shopId);
+        var user = userService.findById(userId);
 
-        shopStaff.setShop(shopService.findById(shopId));
-        shopStaff.setUser(userService.findById(userId));
-        shopStaff.setShopRole(ShopRole.SELLER);
-        shopStaff.setOrderStatusChanges(new ArrayList<>());
-
-        return shopStaffRepository.save(shopStaff);
+        return save(shop, user, ShopRole.SELLER);
     }
 
-    public ShopStaff saveManager(Long shopId, Long userId, Authentication authentication) {
+    @Override
+    @CheckStaff
+    public ShopStaff saveManager(Long shopId, Long userId) {
         var shop = shopService.findById(shopId);
         var manager = userService.findById(userId);
-        var possibleOwner = ((EcommerceUserDetails) authentication.getPrincipal()).user();
 
         if (shop.getShopStaffs().stream().anyMatch(staff -> staff.getUser().getId().equals(manager.getId()))) {
             throw new IllegalArgumentException("User is already a staff of this shop");
         }
 
-        checkIfUserIsOwner(shop, possibleOwner);
-
-        var shopStuff = new ShopStaff();
-        shopStuff.setShop(shop);
-        shopStuff.setUser(manager);
-        shopStuff.setShopRole(ShopRole.MANAGER);
-        shopStuff.setOrderStatusChanges(new ArrayList<>());
-
+        var shopStuff = save(shop, manager, ShopRole.MANAGER);
         eventPublisher.publishEvent(new ManagerRoleAssignedEvent(this, userId));
 
-        return shopStaffRepository.save(shopStuff);
+        return shopStuff;
     }
 
-    private void checkIfUserIsOwner(Shop shop,  User possibleOwner) {
-        boolean isOwner = shop.getShopStaffs().stream()
-                .filter(staff -> staff.getShopRole() == ShopRole.SELLER)
-                .anyMatch(staff -> staff.getUser().getId().equals(possibleOwner.getId()));
+    private ShopStaff save(Shop shop, User user, ShopRole shopRole) {
+        var shopStaff = new ShopStaff();
 
-        if (!isOwner) {
-            throw new IllegalArgumentException("Only the owner can add a manager");
-        }
+        shopStaff.setShop(shop);
+        shopStaff.setUser(user);
+        shopStaff.setShopRole(shopRole);
+        shopStaff.setOrderStatusChanges(new ArrayList<>());
+
+        return shopStaffRepository.save(shopStaff);
     }
-
 
 }

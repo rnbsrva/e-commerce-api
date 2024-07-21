@@ -1,8 +1,7 @@
 package com.akerke.ecommerceapi.repository;
 
 import com.akerke.ecommerceapi.model.ConfirmationToken;
-import com.akerke.ecommerceapi.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.akerke.ecommerceapi.repository.common.CommonRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

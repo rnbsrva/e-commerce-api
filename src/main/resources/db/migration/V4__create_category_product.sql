@@ -16,7 +16,6 @@ CREATE TABLE product
     last_modified_date TIMESTAMP WITHOUT TIME ZONE,
     name               VARCHAR(255),
     description        VARCHAR(255),
-    price              DOUBLE PRECISION,
     image              VARCHAR(255),
     category_id        BIGINT NOT NULL references category(id),
     CONSTRAINT pk_product PRIMARY KEY (id)

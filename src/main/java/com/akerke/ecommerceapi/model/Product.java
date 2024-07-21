@@ -19,8 +19,6 @@ public class Product extends BaseEntity {
 
     private String description;
 
-    private Double price;
-
     private String image;
 
     @OneToMany(

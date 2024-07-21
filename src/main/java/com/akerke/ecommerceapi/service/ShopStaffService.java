@@ -7,6 +7,6 @@ public interface ShopStaffService {
 
     ShopStaff saveSeller(Long shopId, Long userId);
 
-    ShopStaff saveManager(Long shopId, Long userId, Authentication authentication);
+    ShopStaff saveManager(Long shopId, Long userId);
 
 }
