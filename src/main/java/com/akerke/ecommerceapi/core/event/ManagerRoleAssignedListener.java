@@ -11,15 +11,15 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Component
-public class SellerRoleAssignedListener {
+public class ManagerRoleAssignedListener {
 
     private final EmailService emailService;
     private final UserService userService;
 
     @EventListener
-    public void onSellerRoleAssigned(SellerRoleAssignedEvent event) {
+    public void onSellerRoleAssigned(ManagerRoleAssignedEvent event) {
         User user = userService.findById(event.getUserId());
         Map<String, Object> model = Map.of("name", user.getName());
-        emailService.sendEmail(user.getEmail(), "Seller role assigned", "seller-role-assigned.ftl", model);
+        emailService.sendEmail(user.getEmail(), "Manager role assigned", "manager-role-assigned.ftl", model);
     }
 }

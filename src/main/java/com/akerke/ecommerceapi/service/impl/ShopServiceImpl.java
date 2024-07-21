@@ -24,7 +24,7 @@ public class ShopServiceImpl implements ShopService {
     public Shop save(ShopRequest shopRequest) {
         var shop = shopMapper.toShop(shopRequest);
         var savedShop = shopRepository.save(shop);
-        var shopOwner = shopStaffService.save(savedShop.getId(), shopRequest.getUser().getId(), ShopRole.SELLER);
+        var shopOwner = shopStaffService.saveSeller(savedShop.getId(), shopRequest.getUser().getId());
         savedShop.getShopStaffs().add(shopOwner);
         return shopRepository.save(savedShop);
     }

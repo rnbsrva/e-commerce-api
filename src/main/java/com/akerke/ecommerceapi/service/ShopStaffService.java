@@ -2,9 +2,12 @@ package com.akerke.ecommerceapi.service;
 
 import com.akerke.ecommerceapi.common.enums.ShopRole;
 import com.akerke.ecommerceapi.model.ShopStaff;
+import org.springframework.security.core.Authentication;
 
 public interface ShopStaffService {
 
-    ShopStaff save(Long shopId, Long userId, ShopRole role);
+    ShopStaff saveSeller(Long shopId, Long userId);
+
+    ShopStaff saveManager(Long shopId, Long userId, Authentication authentication);
 
 }
