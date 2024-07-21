@@ -1,6 +1,5 @@
 package com.akerke.ecommerceapi.service;
 
-import com.akerke.ecommerceapi.common.enums.ShopRole;
 import com.akerke.ecommerceapi.model.ShopStaff;
 import org.springframework.security.core.Authentication;
 

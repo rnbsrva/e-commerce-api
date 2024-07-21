@@ -9,6 +9,7 @@ public interface ConfirmationTokenService {
     String generateAndSaveToken(User user, ConfirmationTokenType confirmationTokenType);
 
     ConfirmationToken findByToken(String token);
+
     void deleteByToken(ConfirmationToken token);
 
 }
