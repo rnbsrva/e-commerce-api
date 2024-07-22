@@ -2,9 +2,9 @@ spring:
   application:
     name: e-commerce-api
   datasource:
-    url: jdbc:postgresql://localhost:5432/e_commerce?currentSchema=e_commerce
+    url: jdbc:postgresql://localhost:5432/e_commerce
     username: "postgres"
-    password: "0000"
+    password: "postgres"
   flyway:
     locations: classpath:db/migration
   jpa:
