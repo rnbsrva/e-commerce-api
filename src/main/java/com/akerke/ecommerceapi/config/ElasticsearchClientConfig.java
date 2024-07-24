@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
+import org.springframework.data.elasticsearch.client.ClientConfiguration;
+import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @Configuration
@@ -16,9 +17,8 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
         = "com.akerke.ecommerceapi.elasticsearch")
 @ComponentScan(basePackages = { "com.akerke.ecommerceapi.config" })
 public class ElasticsearchClientConfig extends
-        AbstractElasticsearchConfiguration {
+        ElasticsearchConfiguration {
 
-    @Override
     @Bean
     public RestHighLevelClient elasticsearchClient() {
 
@@ -31,4 +31,10 @@ public class ElasticsearchClientConfig extends
         return new RestHighLevelClient(builder);
     }
 
+    @Override
+    public ClientConfiguration clientConfiguration() {
+        return ClientConfiguration.builder()
+                .connectedTo("localhost:9200")
+                .build();
+    }
 }

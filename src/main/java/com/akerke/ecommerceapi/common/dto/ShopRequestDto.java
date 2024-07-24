@@ -2,8 +2,6 @@ package com.akerke.ecommerceapi.common.dto;
 
 import com.akerke.ecommerceapi.common.enums.RequestStatus;
 import com.akerke.ecommerceapi.common.enums.ShopType;
-import com.akerke.ecommerceapi.model.User;
-import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 

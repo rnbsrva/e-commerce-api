@@ -1,10 +1,12 @@
 package com.akerke.ecommerceapi.elasticsearch;
 
 import lombok.RequiredArgsConstructor;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.Criteria;
+import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +20,15 @@ public class ProductSearchServiceImpl implements ProductSearchService {
 
     @Override
     public List<ProductSearch> search(String query) {
-        return elasticsearchOperations.search(
-                        new NativeSearchQueryBuilder()
-                                .withQuery(QueryBuilders.multiMatchQuery(query, "name", "description"))
-                                .build(), ProductSearch.class)
-                .stream()
-                .map(SearchHit::getContent)
-                .collect(Collectors.toList());
+        Criteria criteria = Criteria.where("name").contains(query)
+                .or(new Criteria("description").contains(query));
+
+        Query searchQuery = new CriteriaQuery(criteria);
+
+        SearchHits<ProductSearch> searchHits = elasticsearchOperations.search(searchQuery, ProductSearch.class);
+
+        return searchHits.stream().map(SearchHit::getContent).collect(Collectors.toList());
+
     }
 
 }

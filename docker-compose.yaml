@@ -73,21 +73,21 @@ services:
     ports:
       - "5044:5044"
     depends_on:
-      - db
+      - postgres
       - odfe-node
     environment:
       - PIPELINE_WORKERS=1
       - PIPELINE_BATCH_SIZE=125
       - PIPELINE_BATCH_DELAY=50
     volumes:
-      - ./conf/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./docker/logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       - ./logstash_data:/usr/share/logstash/data
-      - ./conf/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
+      - ./postgresql-42.6.2.jar:/usr/share/logstash/postgresql-42.6.2.jar
     networks:
       - odfe-net
 networks:
   odfe-net:
 volumes:
   odfe-data:
-  db:
+  postgres:
   logstash:
