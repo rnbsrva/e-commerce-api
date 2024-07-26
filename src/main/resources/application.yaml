@@ -2,7 +2,7 @@ spring:
   application:
     name: e-commerce-api
   datasource:
-    url: jdbc:postgresql://localhost:5432/e_commerce
+    url: jdbc:postgresql://localhost:5433/e_commerce
     username: "postgres"
     password: "postgres"
   flyway:

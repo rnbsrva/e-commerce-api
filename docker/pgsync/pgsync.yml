@@ -1,0 +1,8 @@
+#registry:
+#  tables:
+#    - name: product
+#      schema: public
+#      columns:
+#        - id
+#        - name
+#        - description

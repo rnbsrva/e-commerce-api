@@ -1,0 +1,10 @@
+[
+  {
+    "database": "e_commerce",
+    "index": "product",
+    "nodes": {
+      "table": "product",
+      "columns": ["id", "name", "description"]
+    }
+  }
+]

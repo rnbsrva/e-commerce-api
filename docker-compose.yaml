@@ -1,93 +1,57 @@
-version: '3.3'
-
+version: '3.8'
 services:
-  redis:
-    image: redis/redis-stack:latest
-    container_name: redis-stack
-    ports:
-      - "6379:6379"
-      - "8001:8001"
-  postgres:
-    image: postgres:15.1
+  elasticsearch:
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.13.4'
+    container_name: elasticsearch
     environment:
-      POSTGRES_DB: "e_commerce"
-      POSTGRES_SCHEMA: "e_commerce"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    ports:
-      - "5432:5432"
-  odfe-node:
-    image: elasticsearch:7.10.1
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "1000m"
-        max-file: "10"
-    container_name: odfe-node
-    environment:
-      - discovery.type=single-node
-      - node.name=odfe-node
-      - discovery.seed_hosts=odfe-node
-      - bootstrap.memory_lock=true
       - xpack.security.enabled=false
-      - "ES_JAVA_OPTS=-Xms4096m -Xmx4096m"
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     ulimits:
       memlock:
         soft: -1
         hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    volumes:
-      - ./elasticsearch_data:/usr/share/elasticsearch/data
     ports:
-      - "9200:9200"
-      - "9600:9600"
-    networks:
-      - odfe-net
+      - '9200:9200'
+
   kibana:
-    image: kibana:7.10.1
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "3"
-    container_name: odfe-kibana
-    ports:
-      - "5601:5601"
-    expose:
-      - "5601"
-    environment:
-      ELASTICSEARCH_URL: http://odfe-node:9200
-      ELASTICSEARCH_HOSTS: http://odfe-node:9200
-    networks:
-      - odfe-net
-  logstash:
-    user: root
-    image: docker.elastic.co/logstash/logstash-oss:7.9.1
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "3"
-    ports:
-      - "5044:5044"
+    image: 'docker.elastic.co/kibana/kibana:7.13.4'
     depends_on:
-      - postgres
-      - odfe-node
+      - elasticsearch
+    ports:
+      - '5601:5601'
     environment:
-      - PIPELINE_WORKERS=1
-      - PIPELINE_BATCH_SIZE=125
-      - PIPELINE_BATCH_DELAY=50
-    volumes:
-      - ./docker/logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./logstash_data:/usr/share/logstash/data
-      - ./postgresql-42.6.2.jar:/usr/share/logstash/postgresql-42.6.2.jar
-    networks:
-      - odfe-net
-networks:
-  odfe-net:
-volumes:
-  odfe-data:
-  postgres:
-  logstash:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+
+  database:
+    build:
+      context: .
+      dockerfile: PostgresDockerfile
+    container_name: database
+    ports:
+      - '5433:5433'
+    environment:
+      POSTGRES_DB: "e_commerce"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGPORT: 5433
+  redis:
+    image: 'redis:alpine'
+    container_name: redis
+    ports:
+      - '6379:6379'
+
+  pgsync:
+    build:
+      context: .
+      dockerfile: PgsyncDockerfile
+    container_name: pgsync
+    environment:
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DATABASE=e_commerce
+      - PG_HOST=database
+      - PG_PORT=5433
+      - ELASTICSEARCH_HOST=elasticsearch
+      - REDIS_HOST=redis
