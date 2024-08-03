@@ -4,16 +4,21 @@ services:
     image: 'docker.elastic.co/elasticsearch/elasticsearch:7.13.4'
     container_name: elasticsearch
     environment:
-      - xpack.security.enabled=false
-      - discovery.type=single-node
-      - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      xpack.security.enabled: false
+      discovery.type: single-node
+      bootstrap.memory_lock: true
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
       - '9200:9200'
+    healthcheck:
+      test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
 
   kibana:
     image: 'docker.elastic.co/kibana/kibana:7.13.4'
@@ -22,20 +27,8 @@ services:
     ports:
       - '5601:5601'
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
 
-  database:
-    build:
-      context: .
-      dockerfile: PostgresDockerfile
-    container_name: database
-    ports:
-      - '5433:5433'
-    environment:
-      POSTGRES_DB: "e_commerce"
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      PGPORT: 5433
   redis:
     image: 'redis:alpine'
     container_name: redis
@@ -44,14 +37,37 @@ services:
 
   pgsync:
     build:
-      context: .
-      dockerfile: PgsyncDockerfile
+      context: ./docker/pgsync
     container_name: pgsync
+    volumes:
+      - ./docker/pgsync/pgsync.yml:/pgsync.yml
+    depends_on:
+      database:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+      redis:
+        condition: service_started
     environment:
-      - PG_USER=postgres
-      - PG_PASSWORD=postgres
-      - PG_DATABASE=e_commerce
-      - PG_HOST=database
-      - PG_PORT=5433
-      - ELASTICSEARCH_HOST=elasticsearch
-      - REDIS_HOST=redis
+      PG_USER: postgres
+      PG_PASSWORD: postgres
+      PG_DATABASE: e_commerce
+      PG_HOST: database
+      PG_PORT: 5432
+      ELASTICSEARCH_HOST: elasticsearch
+      REDIS_HOST: redis
+  database:
+    image: postgres:15.1
+    container_name: database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgresй
+      POSTGRES_DB: e_commerce
+    ports:
+      - "5433:5432"
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+      - "-c"
+      - "max_replication_slots=1"

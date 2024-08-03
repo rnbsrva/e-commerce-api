@@ -21,6 +21,7 @@ public class ProductController {
     private final ProductSearchService productSearchService;
 
     @PostMapping()
+
     @ResponseStatus(HttpStatus.ACCEPTED)
     void save (
             @RequestBody ProductSaveDto productSaveDto,

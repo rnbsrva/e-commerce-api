@@ -1,8 +1,17 @@
-#registry:
-#  tables:
-#    - name: product
-#      schema: public
-#      columns:
-#        - id
-#        - name
-#        - description
+collections:
+  product:
+    mapping:
+      - column: id
+        type: keyword
+      - column: name
+        type: text
+      - column: description
+        type: text
+registry:
+  tables:
+    - name: product
+      schema: public
+      columns:
+        - id
+        - name
+        - description
