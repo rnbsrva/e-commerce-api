@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 
 public interface ProductService {
 
-    Product save(ProductSaveDto productSaveDto, Long shopId);
+    Product save(ProductSaveDto productSaveDto);
 
     Product findById(Long id);
 //

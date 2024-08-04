@@ -3,6 +3,7 @@ package com.akerke.ecommerceapi.controller.advice;
 
 import com.akerke.ecommerceapi.common.exception.AuthException;
 import com.akerke.ecommerceapi.common.exception.EntityNotFoundException;
+import com.akerke.ecommerceapi.common.exception.MinioException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -22,6 +23,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AuthException.class)
     public ProblemDetail handle(AuthException e) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getMessage());
+    }
+
+    @ExceptionHandler(MinioException.class)
+    public ProblemDetail handle(MinioException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
 }

@@ -1,9 +1,9 @@
 package com.akerke.ecommerceapi.common.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public record ProductSaveDto(
         @NotBlank @Size(min = 3, max = 50)
@@ -13,8 +13,12 @@ public record ProductSaveDto(
         @NotNull @Positive
         Double price,
         @NotNull
-        Long categoryId,
+        Long shopId,
         @NotNull
-        ShopProductSaveDto shopProductSaveDto
+        Long categoryId,
+        @NotEmpty  @Size(min = 1, max = 5)
+        List<MultipartFile> images,
+        @NotNull @PositiveOrZero
+        Integer quantity
 ) {
 }

@@ -1,5 +1,6 @@
 package com.akerke.ecommerceapi.core.mapper;
 
+import com.akerke.ecommerceapi.common.dto.ProductSaveDto;
 import com.akerke.ecommerceapi.common.dto.ShopProductSaveDto;
 import com.akerke.ecommerceapi.model.ShopProduct;
 import org.mapstruct.Mapper;
@@ -18,5 +19,11 @@ public interface ShopProductMapper {
     @Mapping(target = "available", expression = "java(true)")
     @Mapping(target = "orders", expression = "java(new ArrayList<>())")
     ShopProduct toShopProduct(ShopProductSaveDto shopProductSaveDto);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "available", expression = "java(true)")
+    @Mapping(target = "orders", expression = "java(new ArrayList<>())")
+    ShopProduct toShopProduct(ProductSaveDto productSaveDto);
+
 
 }

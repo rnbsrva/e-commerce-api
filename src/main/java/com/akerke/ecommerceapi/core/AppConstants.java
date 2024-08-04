@@ -7,6 +7,6 @@ import java.util.List;
 @Getter
 public class AppConstants {
     
-    public static final List<String> BUCKET_NAMES = List.of("products");
+    public static final List<String> BUCKET_NAMES = List.of("product", "review");
 
 }
