@@ -32,5 +32,28 @@ services:
       - "9000:9000"
       - "9001:9001"
     command: server /data --console-address ":9001"
+  elasticsearch:
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.13.4'
+    container_name: elasticsearch
+    environment:
+      xpack.security.enabled: false
+      discovery.type: single-node
+      bootstrap.memory_lock: true
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - '9200:9200'
+    healthcheck:
+      test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
+
 volumes:
   minio-data:
+  elasticsearch-data:
+    driver: local
+

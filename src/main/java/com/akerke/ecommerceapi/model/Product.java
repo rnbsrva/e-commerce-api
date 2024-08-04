@@ -1,5 +1,6 @@
 package com.akerke.ecommerceapi.model;
 
+import com.akerke.ecommerceapi.elasticsearch.ProductEntityListener;
 import com.akerke.ecommerceapi.model.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@EntityListeners(ProductEntityListener.class)
 public class Product extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
