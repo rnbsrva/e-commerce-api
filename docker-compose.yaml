@@ -1,67 +1,16 @@
 version: '3.8'
 services:
-  elasticsearch:
-    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.13.4'
-    container_name: elasticsearch
-    environment:
-      xpack.security.enabled: false
-      discovery.type: single-node
-      bootstrap.memory_lock: true
-      ES_JAVA_OPTS: -Xms512m -Xmx512m
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    ports:
-      - '9200:9200'
-    healthcheck:
-      test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
-      interval: 30s
-      timeout: 10s
-      retries: 50
-
-  kibana:
-    image: 'docker.elastic.co/kibana/kibana:7.13.4'
-    depends_on:
-      - elasticsearch
-    ports:
-      - '5601:5601'
-    environment:
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-
   redis:
     image: 'redis:alpine'
     container_name: redis
     ports:
       - '6379:6379'
-
-  pgsync:
-    build:
-      context: ./docker/pgsync
-    container_name: pgsync
-    volumes:
-      - ./docker/pgsync/pgsync.yml:/pgsync.yml
-    depends_on:
-      database:
-        condition: service_started
-      elasticsearch:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    environment:
-      PG_USER: postgres
-      PG_PASSWORD: postgres
-      PG_DATABASE: e_commerce
-      PG_HOST: database
-      PG_PORT: 5432
-      ELASTICSEARCH_HOST: elasticsearch
-      REDIS_HOST: redis
   database:
     image: postgres:15.1
     container_name: database
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgresй
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: e_commerce
     ports:
       - "5433:5432"
@@ -71,3 +20,17 @@ services:
       - "wal_level=logical"
       - "-c"
       - "max_replication_slots=1"
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio-data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+volumes:
+  minio-data:
