@@ -5,6 +5,7 @@ import com.akerke.ecommerceapi.common.dto.ShopProductSaveDto;
 import com.akerke.ecommerceapi.core.annotation.CheckStaff;
 import com.akerke.ecommerceapi.core.mapper.ShopProductMapper;
 import com.akerke.ecommerceapi.model.Product;
+import com.akerke.ecommerceapi.model.ShopProduct;
 import com.akerke.ecommerceapi.repository.ShopProductRepository;
 import com.akerke.ecommerceapi.security.EcommerceUserDetails;
 import com.akerke.ecommerceapi.service.ProductService;
@@ -35,5 +36,10 @@ public class ShopProductServiceImpl implements ShopProductService {
         shopProduct.setShop(shop);
         shopProduct.setProduct(product);
         shopProductRepository.save(shopProduct);
+    }
+
+    @Override
+    public ShopProduct getById(Long shopProductId) {
+        return shopProductRepository.findByID(shopProductId);
     }
 }
