@@ -1,5 +1,6 @@
 package com.akerke.ecommerceapi.repository;
 
+import com.akerke.ecommerceapi.common.enums.OrderStatus;
 import com.akerke.ecommerceapi.model.Order;
 import com.akerke.ecommerceapi.model.User;
 import com.akerke.ecommerceapi.repository.common.CommonRepository;
@@ -15,5 +16,5 @@ public interface OrderRepository extends CommonRepository<Order, Long> {
         return Order.class;
     }
 
-    List<Order> findAllByUser(User user);
+    List<Order> findAllByUserAndStatus(User user, OrderStatus status);
 }

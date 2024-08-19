@@ -2,6 +2,7 @@ package com.akerke.ecommerceapi.service.impl;
 
 import com.akerke.ecommerceapi.common.dto.OrderSaveDto;
 import com.akerke.ecommerceapi.common.dto.OrderStatusDto;
+import com.akerke.ecommerceapi.common.enums.OrderStatus;
 import com.akerke.ecommerceapi.core.mapper.OrderMapper;
 import com.akerke.ecommerceapi.model.Order;
 import com.akerke.ecommerceapi.model.ShopProduct;
@@ -39,11 +40,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderStatusDto> getUnacceptedOrdersByUser(Authentication authentication) {
+    public List<OrderStatusDto> getOrdersByUserAndStatus(Authentication authentication, OrderStatus orderStatus) {
         var user = (User) authentication.getPrincipal();
-        var orders = orderRepository.findAllByUser(user);
+        var orders = orderRepository.findAllByUserAndStatus(user, orderStatus);
 
         return orders.stream().map(orderMapper::toOrderStatusDto).toList();
     }
+
+
 
 }

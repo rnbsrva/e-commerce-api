@@ -2,6 +2,7 @@ package com.akerke.ecommerceapi.controller;
 
 import com.akerke.ecommerceapi.common.dto.OrderSaveDto;
 import com.akerke.ecommerceapi.common.dto.OrderStatusDto;
+import com.akerke.ecommerceapi.common.enums.OrderStatus;
 import com.akerke.ecommerceapi.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +29,11 @@ public class OrderController {
     }
 
     @GetMapping()
-    ResponseEntity<List<OrderStatusDto>> getUnacceptedOrdersByUser(
-            Authentication authentication
+    ResponseEntity<List<OrderStatusDto>> getOrdersByUserAndStatus(
+            Authentication authentication,
+            OrderStatus orderStatus
     ) {
-        return ResponseEntity.ok(orderService.getUnacceptedOrdersByUser(authentication));
+        return ResponseEntity.ok(orderService.getOrdersByUserAndStatus(authentication, orderStatus));
     }
 
 }
